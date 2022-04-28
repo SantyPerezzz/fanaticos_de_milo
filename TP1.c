@@ -1,198 +1,125 @@
 #include <stdio.h>
 
-int longitudDeCadena (string cadena)
+int longitudDeCadena (char* cadena)
 {
-    int cant = 0; 
-    char* aux=&cadena;
-    while (*aux != '\0')
+    int cantidad =0;
+    while (cadena[cantidad]= '\0')
     {   
-        cant++;
-        aux=aux+1;
+        cantidad++;
     } 
-    return cant;
+    return cantidad;
 }
 
-double convertirEnNumeros (string cadena)
+double convertirEnNumeros (char* cadena)
 {
     double numero =0;
-    char* aux=&cadena;
-    while (*aux != '\0' || *aux != ',' || *aux != '.') //PARTE ENTERA
+    int i=0;
+    for (;cadena[i] != '\0' || cadena[i] != ',' || cadena[i] != '.';i++) //PARTE ENTERA
     {   
         numero *=10;
-        numero+=(*aux-48);
-        aux=aux+1;
+        numero+=(cadena[i]-'0');
     } 
-    if (*aux != ',' || *aux != '.') //PARTE DECIMAL
+    if (cadena[i] == ',' || cadena[i] == '.') //PARTE DECIMAL
     {
-        aux=aux+1;
+        i++;
         int decimal = 0;
         int divDeDecimal = 1;
-        while (*aux != '\0')
+        for (;cadena[i] != '\0';i++)
         {
             divDeDecimal *= 10;
             decimal *=10;
-            decimal+=(*aux-48);
-            aux=aux+1;
+            decimal+=(cadena[i]-48);
         }
         numero += (double)(decimal/divDeDecimal);
     }
     return numero;
 }
 
-string palabraEnMayus (string palabra)
+void palabraEnMayus (char* palabra, char*palabraEnMayuscula)
 {
-    string palabraEnMayuscula = "";
-    char* aux= &palabra;
-    while (*aux != '\0')
+    for (int i=0;palabra[i] != '\0';i++)
     {
-        if (*aux <123 && *aux > 96)
+        if (palabra[i] <='z' && palabra[i] >='a')
         {
-            palabraEnMayuscula+= (*aux-'a'+'A');
+            palabraEnMayuscula[i] = (palabra[i]-'a'+'A');
         }
         else
         {
-            palabraEnMayuscula+=*aux;
+            palabraEnMayuscula[i] = palabra[i];
         }
-        aux=aux+1;
     }
-    return palabraEnMayuscula;
 }
 
-string eliminarCaracter (string cadena, char caracter)
+void eliminarCaracter (char* cadena, char caracter , char* cadenaSinCaracter)
 {
-    string cadenaSinCaracter = "";
-    char* aux= &cadena;
-    while (*aux !='\0')
+    int j =0;
+    for (int i = 0; cadena[i] != '\0'; i++)
     {
-        if (*aux != caracter)
+        if (cadena[i] != caracter)
         {
-            cadenaSinCaracter+= aux*;
-        }
-        aux=aux+1;        
+            cadenaSinCaracter[j] = cadena[i];
+            j++;
+        }   
     }
-    return cadenaSinCaracter;
-}
-
-string concatenar (string cadena1, string cadena2)
-{
-    char* aux= &cadena2
-    string cadenaFinal = cadena1;
     
-    while (*aux !='\0')
-     {
-        cadenaFinal+= *aux;
-        aux=aux+1;
-     }
-    return cadenaFinal;
 }
 
-string cadanaObtenida (string cadena, int pos1, int pos2)
+void concatenar(char* cadena1, char* cadena2, char* cadenaFinal)
 {
-    string cadenafinal ="";
-    char* aux = &cadena;
-    int pos = pos1;
-    while (*aux != '\0' || pos!=pos2)
+    int i=0;
+    int j=0;
+    int cantCaracteres = longitudDeCadena (cadena1) + longitudDeCadena(cadena2);
+    for(i = 0; cadena1[i] != '\0' && i < cantCaracteres; i++){
+        cadenaFinal[i] = cadena1[i];
+    }
+    for(j = 0; cadena2[j] != '\0' && i+j < cantCaracteres; j++){
+        cadenaFinal[i+j] = cadena2[j];
+    }
+    cadenaFinal[i+j] = '\0';
+}
+
+void cadanaObtenida (char* cadena, int pos1, int pos2,char* cadenafinal)
+{
+    int j =0;
+    for (int i=pos1;cadena[i] != '\0' || pos1!=pos2;i++)
     {
-        cadenafinal+=*aux;
-        aux=aux+1;
-        pos+=1;
+        cadenafinal[j]=cadena[i];
+        j++;
     }
-    return cadenafinal;
-    
 }
 
-string ingresarElCaracterEnUnaPosicion (string cadena, char caracter, int pos)
+void ingresarElCaracterEnUnaPosicion (char* cadena, char caracter, int pos, char* cadenaFinal)
 {
-    string cadenaAnterior = cadanaObtenida(cadena,0,pos);
-    string cadenaSiguiente = cadanaObtenida(cadena,pos,longitudDeCadena(cadena);
-    
-    string cadenafinal=concatenar(concatenar(cadenaAnterior,(string)caracter),cadenaSiguiente);
-    
-    return cadenaFinal;
+    char cadenaAnterior[pos] ;
+    cadanaObtenida(cadena,0,pos,cadenaAnterior);
+    char cadenaSiguiente[longitudDeCadena(cadena)-pos];
+    cadanaObtenida(cadena,pos,longitudDeCadena(cadena),cadenaSiguiente);
+    char caracteraux[1];
+    caracteraux[1]=caracter;
+    char cadenaaux [pos+1];
+    concatenar(cadenaAnterior,caracteraux,cadenaaux);
+    concatenar(cadenaaux,cadenaSiguiente,cadenaFinal);
 }
 
 int main(){
-    printf("Ingrese la operacion q deseas \n 
-    a=Calcular y retornar la longitud de una cadena dada \n 
-    b=Converte una cadena de dígitos en su equivalente numérico \n 
-    c=Converte una cadena de caracteres a la misma cadena con todos sus caracteres en mayúscula \n 
-    d=Elimina de una cadena dada todas las ocurrencias de un carácter dado \n 
-    e=Concatena al final de la primer cadena dada una segunda cadena también dada \n 
-    f=Modifica la cadena dada con la inserción de un carácter dado en una posición determinada");
-    char opcion;
-    scanf("%c\n",&opcion);
+
+    char ej_a_c_d_f []="electrodomestico";
+    char ej_b []="123.123";
+    char ej_e []="importado";
+
+    int cant =longitudDeCadena (ej_a_c_d_f);
+    double num = convertirEnNumeros(ej_b);
+    char mayus[cant];
+    palabraEnMayus(ej_a_c_d_f,mayus);
+    char sine[cant-3];
+    eliminarCaracter(ej_a_c_d_f,'e',sine);
+    char cont[cant+longitudDeCadena(ej_e)];
+    concatenar(ej_a_c_d_f,ej_e,cont);
+    char conh[cant+1];
+    ingresarElCaracterEnUnaPosicion(ej_a_c_d_f,'h',0,conh);
+
+    printf("%i %d %s %s %s %s",cant,num,mayus,sine,cont,conh);
 
 
-    switch (opcion)
-    {
-    case 'a':
-        string cadena;
-        printf("Ingrese una cadena \n");
-        scanf("%s\n",&cadena);
-        int cant = longitudDeCadena (cadena);
-        printf("La longitid es de %d" , cant);
-        break;
-    case 'b':
-        string cadena;
-        printf("Ingrese una cadena \n");
-        scanf("%s\n",&cadena);
-        double numero = convertirEnNumeros (string cadena);
-        printf("El nunmero es %f",numero);
-        break;
-        
-    case 'c':
-        string cadena;
-        printf("Ingrese una cadena \n"):
-        scanf("%s\n",&cadena);
-        string palabraEnMayuscula= palabraEnMayus (cadena)
-        printf("La cadena en mayuscula es %s",palabraEnMayuscula);
-        break;
-
-    case 'd':
-        string cadena = "";
-        printf("Ingrese una cadena \n"):
-        scanf("%s\n",&cadena); 
-        char caracter = '';
-        printf("Ingrese una caracter \n"):
-        scanf("%c\n",&caracter); 
-        string cadenaSinCaracter = eliminarCaracter(cadena,caracter);
-        printf("La cadena en mayuscula es %s",cadenaSinCaracter);
-        break;
-        
-    case 'e':
-        string cadena1="";
-        
-        printf("Ingrese la primer cadena \n");
-        scanf("%s\n",&cadena1);
-
-        string cadena2="";
-        
-        printf("Ingrese la segunda cadena \n");
-        scanf("%s\n",&cadena2);
-        
-        string cadenaFinal= concatenar (cadena1 , cadena2);
-        
-        printf("La combinacion de cadenas es %s",cadenaFinal);
-        break;
-    
-    case 'f':
-        string cadena = "";
-        printf("Ingrese una cadena \n"):
-        scanf("%s\n",&cadena);
-
-        char caracter = '';
-        printf("Ingrese una caracter \n"):
-        scanf("%c\n",&caracter); 
-
-        int pos = 0;
-        printf("Ingrese la posicion \n"):
-        scanf("%c\n",&pos); 
-
-        string cadenaConElCaracter = ingresarElCaracterEnUnaPosicion (cadena,caracter,pos);
-        printf("La cadenas con el caracter es %s",cadenaConElCaracter);
-        break;
-    default:
-        printf("ERROR");
-        break;
     return 0;
 }

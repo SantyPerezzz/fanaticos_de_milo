@@ -135,111 +135,79 @@ int calcularOcurrencias (char* cadena,char letra)
 }
 int main(){
     printf("Elegir la opcion: \n1 = Calcular y retornar la longitud de una cadena dada \n2 = Convertir una cadena de dígitos en su equivalente numérico \n3 = Convertir una cadena de caracteres a la misma cadena con todos sus caracteres en mayúscula\n4 = Eliminar de una cadena dada todas las ocurrencias de un carácter dado \n5 = Concatenar al final de la primer cadena dada una segunda cadena dada \n6 = Modificar la cadena dada con la inserción de un carácter dado en una posición determinada \n");
-    int caracter;
-    scanf("%d",&caracter);
+    int opcion;
+    scanf("%d",&opcion);
 
 
     printf("Ingrese una cadena \n");
     char cadena [81];
-    scanf("%s",&cadena);
+    scanf("%s",&opcion);
     //getc();
-
-    if (1==caracter){
-        int cantidad= longitudDeCadena (cadena);
-        printf("Tu cadena mide %i \n",cantidad);
-    }
-    else if (2==caracter){
-        double numero= convertirEnNumeros(cadena);
-        printf("Tu numero es %.3f \n",numero);
-    }
-    else if (3==caracter){
-        char mayu[longitudDeCadena(cadena)];
-        palabraEnMayus(cadena,mayu);
-        printf("Tu cadena es %s \n",mayu);
-    }
-    else if (4==caracter){
-        printf("Ingrese una letra \n");
-        char letra1;
-        fflush(stdin);
-        scanf("%c",&letra1);
-        int cantcarac = calcularOcurrencias(cadena,letra1);
-        char cadenaSin[longitudDeCadena(cadena)-cantcarac];
-        eliminarCaracter(cadena, letra1, cadenaSin);
-        printf("Su palabra es %s \n",cadenaSin);
-    }
-    else if (5==caracter){
-        char cadena2[81];
-        printf("Ingrese otra cadena \n");
-        char cadenaFinal1[longitudDeCadena(cadena)+longitudDeCadena(cadena2)];
-        scanf("%s",cadena2);
-        concatenar (cadena, cadena2, cadenaFinal1);
-        printf("Su cadena es %s \n",cadenaFinal1);
-    }
-    else if (6==caracter){
-        printf("Ingrese una letra \n");
-        char letra;
-        fflush(stdin);
-        scanf("%c",&letra);
-        printf("Ingrese una posicion \n");
-        int pos;
-        scanf("%i",&pos);
-        char cadenaFinal[longitudDeCadena(cadena)+1];
-        ingresarElCaracterEnUnaPosicion(cadena,letra,pos,cadenaFinal);
-        printf("Tu cadena es: %s \n",cadenaFinal);
-    }
-    /*
-    switch (caracter)
+    
+    switch (opcion)
     {
     case 1:
-        int cantidad= longitudDeCadena (cadena);
-        printf("Tu cadena mide %i \n",cantidad);
-        break;
-
-    case 2:
-        double numero= convertirEnNumeros(cadena);
-        printf("Tu numero es %.3f \n",numero);
-        break;
-
-    case 3:
-        char mayu[longitudDeCadena(cadena)];
-        palabraEnMayus(cadena,mayu);
-        printf("Tu cadena es %s \n",mayu);    
-        break;
-    
-    case 4:
-        printf("Ingrese una letra \n");
-        char letra1;
-        fflush(stdin);
-        scanf("%c",&letra1);
-        int cantcarac = calcularOcurrencias(cadena,letra1);
-        char cadenaSin[longitudDeCadena(cadena)-cantcarac];
-        eliminarCaracter(cadena, letra1, cadenaSin);
-        printf("Su palabra es %s \n",cadenaSin);
-        break;
-    
-    case 5:
-        char cadena2[81];
-        printf("Ingrese otra cadena \n");
-        char cadenaFinal1[longitudDeCadena(cadena)+longitudDeCadena(cadena2)];
-        scanf("%s",cadena2);
-        concatenar (cadena, cadena2, cadenaFinal1);
-        printf("Su cadena es %s \n",cadenaFinal1);
-        break;
-    
-    case 6:
-        printf("Ingrese una letra \n");
-        char letra;
-        fflush(stdin);
-        scanf("%c",&letra);
-        printf("Ingrese una posicion \n");
-        int pos;
-        scanf("%i",&pos);
-        char cadenaFinal[longitudDeCadena(cadena)+1];
-        ingresarElCaracterEnUnaPosicion(cadena,letra,pos,cadenaFinal);
-        printf("Tu cadena es: %s \n",cadenaFinal);
+    {
+        int cantidad = longitudDeCadena(cadena);
+        printf("Tu cadena mide %i \n", cantidad);
         break;
     }
 
+    case 2:
+    {
+        double numero = convertirEnNumeros(cadena);
+        printf("Tu numero es %.3f \n", numero);
+        break;
+    }
+
+    case 3:
+    {
+        char mayu[longitudDeCadena(cadena)];
+        palabraEnMayus(cadena, mayu);
+        printf("Tu cadena es %s \n", mayu);
+        break;
+    }
+
+    case 4:
+    {
+        printf("Ingrese una letra \n");
+        char letra1;
+        fflush(stdin);
+        scanf("%c", &letra1);
+        int cantcarac = calcularOcurrencias(cadena, letra1);
+        char cadenaSin[longitudDeCadena(cadena) - cantcarac];
+        eliminarCaracter(cadena, letra1, cadenaSin);
+        printf("Su palabra es %s \n", cadenaSin);
+        break;
+    }
+
+    case 5:
+    {
+        char cadena2[81];
+        printf("Ingrese otra cadena \n");
+        char cadenaFinal1[longitudDeCadena(cadena) + longitudDeCadena(cadena2)];
+        scanf("%s", cadena2);
+        concatenar(cadena, cadena2, cadenaFinal1);
+        printf("Su cadena es %s \n", cadenaFinal1);
+        break;
+    }
+
+    case 6:
+    {
+        printf("Ingrese una letra \n");
+        char letra;
+        fflush(stdin);
+        scanf("%c", &letra);
+        printf("Ingrese una posicion \n");
+        int pos;
+        scanf("%i", &pos);
+        char cadenaFinal[longitudDeCadena(cadena) + 1];
+        ingresarElCaracterEnUnaPosicion(cadena, letra, pos, cadenaFinal);
+        printf("Tu cadena es: %s \n", cadenaFinal);
+        break;
+    }
+    }
+    /*
     char ej_a_c_d_f []="electrodomestico";
     char ej_b []="123.123";
     char ej_e []="importado";
@@ -257,7 +225,6 @@ int main(){
 
     printf("Resultado es %i %.3f %s %s %s %s",cant,num,mayus,sine,cont,conh);
     */
-    
-    printf("Fin6");
+   
     return 0;
 }

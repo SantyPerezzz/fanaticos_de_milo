@@ -1,0 +1,30 @@
+	.file	"studio.c"
+	.text
+	.section .rdata,"dr"
+LC0:
+	.ascii "La respuesta es %d\12\0"
+	.text
+	.globl	_prontf
+	.def	_prontf;	.scl	2;	.type	32;	.endef
+_prontf:
+LFB0:
+	.cfi_startproc
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	.cfi_offset 5, -8
+	movl	%esp, %ebp
+	.cfi_def_cfa_register 5
+	subl	$24, %esp
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	$LC0, (%esp)
+	call	_printf
+	nop
+	leave
+	.cfi_restore 5
+	.cfi_def_cfa 4, 4
+	ret
+	.cfi_endproc
+LFE0:
+	.ident	"GCC: (MinGW.org GCC Build-20200227-1) 9.2.0"
+	.def	_printf;	.scl	2;	.type	32;	.endef

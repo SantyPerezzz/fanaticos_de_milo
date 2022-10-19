@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 int longitudDeCadena (char* cadena)
 {
@@ -134,16 +135,16 @@ int calcularOcurrencias (char* cadena,char letra)
     return cant;
 }
 int main(){
-    printf("Elegir la opcion: \n1 = Calcular y retornar la longitud de una cadena dada \n2 = Convertir una cadena de dígitos en su equivalente numérico \n3 = Convertir una cadena de caracteres a la misma cadena con todos sus caracteres en mayúscula\n4 = Eliminar de una cadena dada todas las ocurrencias de un carácter dado \n5 = Concatenar al final de la primer cadena dada una segunda cadena dada \n6 = Modificar la cadena dada con la inserción de un carácter dado en una posición determinada \n");
+   printf("Elegir la opcion: \n1 = Calcular y retornar la longitud de una cadena dada \n2 = Convertir una cadena de dígitos en su equivalente numérico \n3 = Convertir una cadena de caracteres a la misma cadena con todos sus caracteres en mayúscula\n4 = Eliminar de una cadena dada todas las ocurrencias de un carácter dado \n5 = Concatenar al final de la primer cadena dada una segunda cadena dada \n6 = Modificar la cadena dada con la inserción de un carácter dado en una posición determinada \n");
     int opcion;
     scanf("%d",&opcion);
 
 
     printf("Ingrese una cadena \n");
     char cadena [81];
-    scanf("%s",&opcion);
+    scanf("%s",&cadena);
     //getc();
-    
+    /
     switch (opcion)
     {
     case 1:

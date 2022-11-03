@@ -9,41 +9,33 @@ FILE *yyin;
 DIGITO                  [0-9]
 MAYUSCULA               [A-Z]
 MINUSCULA               [a-z]
-CARACTER                [{MAYUSCULA}{MINUSCULA}_]
-CARACTERPUNTUACION      [")""("","".""}""{""]""[""~"":"";""&""|""\\""-"]
+CARACTER                {MAYUSCULA}|{MINUSCULA}|"_"
+CARACTERPUNTUACION      ")"|"("|","|"."|"}"|"{"|"]"|"["|"~"|":"|";"|"&"|"|"|"\\"|"-"
 ESPACIO                 " "
-OPERADOR                ["+""-""/""*""^""<"">""<="">=""==""/="]
-CARACTERLITERAL         {CARACTER}|{CARACTERPUNTUACION}|{ESPACIO}|{OPERADORES}|=
+OPERADOR                "+"|"-"|"/"|"*"|"^"|"<"|">"|"<="|">="|"=="|"/="
+CARACTERLITERAL         {CARACTER}|{CARACTERPUNTUACION}|{ESPACIO}|{OPERADOR}|=
 CADENA                  \"{CARACTERLITERAL}*\"
 NUMERO                  {DIGITO}+
 LOGICO                  "Verdadeiro"|"Falsificado"
 IDENTIFICADOR           {MAYUSCULA}({CARACTER}|{DIGITO})*
 CONSTANTE               {NUMERO}|{CADENA}|{LOGICO}
-PALABRARESERVADA        ["enquanto""se""senao""quantidade""palavra""veracidade""funcao""milo"]
+PALABRARESERVADA        "enquanto"|"se"|"senao"|"quantidade"|"palavra"|"veracidade"|"funcao"|"milo"
 
 %%
 
-{DIGITO}                  {printf("DIGITO\n");}
-{MAYUSCULA}               {printf("MAYUSCULA\n");}
-{MINUSCULA}               {printf("MINUSCULA\n");}
-{CARACTER}                {printf("CARACTER\n");}
-{CARACTERPUNTUACION}      {printf("CARACTERPUNTUACION\n");}
-{OPERADOR}                {printf("OPERADOR\n");}
-{CARACTERLITERAL}         {printf("CARACTERLITERAL\n");}
-{CADENA}                  {printf("CADENA\n");}
-{NUMERO}                  {printf("NUMERO\n");}
-{LOGICO}                  {printf("LOGICO\n");}
-{IDENTIFICADOR}           {printf("IDENTIFICADOR\n");}
-{CONSTANTE}               {printf("CONSTANTE\n");}
-{PALABRARESERVADA}        {printf("PALABRARESERVADA\n");}
+{PALABRARESERVADA}        {printf("PALABRARESERVADA (%s) \n" ,yytext);}
+{IDENTIFICADOR}           {printf("IDENTIFICADOR (%s) \n",yytext);}
+{CONSTANTE}               {printf("CONSTANTE (%s) \n",yytext);}
+{OPERADOR}                {printf("OPERADOR (%s) \n",yytext);}
+{CARACTERPUNTUACION}      {printf("CARACTERPUNTUACION (%s) \n",yytext);}
 \n
 \t
 " "
-.                           error()
+.                           error("aaaah");
 
 %%
 int main (int argc, char *argv[]){
-    if((yyin == fopen(argv1[1],"rt"))==NULL){
+    if( ( yyin = fopen(argv[1],"rt")) ==NULL){
         printf("F en el chat\n");
         return 1;
     }
@@ -60,4 +52,3 @@ int error(void){
     printf("Error lexico: no se entiende la palabra %s", yytext);
     exit(1);
 }
-%%

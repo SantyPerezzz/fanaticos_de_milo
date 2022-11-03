@@ -4,28 +4,30 @@
     #include <stdbool.h>
     int yylex(void);
     void yyerror(char *s);
-    FILE* yyin;
 %}
 
 %start inicio
 
 //PALABRAS RESERVADAS
-%token MIENTRAS SI SINO ESCRIBIR VERACIDAD ENTERO PALABRA INICIADOR FIN
+%token MIENTRAS SI SINO ESCRIBIR VERACIDAD ENTERO PALABRA INICIADOR
 //VARIABLE
 %token IDENTIFICADOR
 //OPERADORES
-%token MENORIGUAL MENOR MAYORIGUAL MAYOR SEMEJANTE DIFERENTE Y O SUMA RESTA MUTIPLICACION DIVICION POTENCIA
+%token OPERADORCOMPARACION OPERADORLOGICO OPERADORADICION OPERADORPRODUCTO OPERADORPOTENCIA
+//sentencias
+%token ABRESENTENCIA CIERRASENTENCIA
+
 //CONSTANTES
 %token NUMERO
 %token VERDADERO FALSO 
 %token CADENA
-%token ENTER ESPACIO IGUAL PABRE PCIERRE
+%token IGUAL PABRE PCIERRE
 
 //PRECEDENCIA DE ABAJO PARA ARRIBA
-%right Y O
-%right MENOR MAYOR MENORIGUAL MAYORIGUAL
-%right SUMA RESTA
-%right MUTIPLICACION DIVICION
+%right OPERADORLOGICO
+%right OPERADORCOMPARACION
+%right OPERADORADICION
+%right OPERADORPRODUCTO
 %right POTENCIA
 
 
@@ -36,28 +38,30 @@
 %%
 
 inicio:
-    INICIADOR proceso FIN {printf("encontro el milo voar\n");}
+    INICIADOR bloque
 //PROBANDO LLEGE A LA CONCLUCION Q VA DIRECTO A proceso
+
+bloque: ABRESENTENCIA procesos CIERRASENTENCIA
+
 procesos:
-    procesos procesos {printf("encontro el procesos\n");}
-    |proceso {printf("encontro el proceso\n");}
+    proceso procesos
+    |proceso
 
 proceso:
     usosvariables
     |usarfuncion
-    |ENTER {printf("encontro el ENTER\n");}
 
 usosvariables:
     declararvariable
     |modificarvariable
 
 declararvariable:
-    ENTERO ESPACIO IDENTIFICADOR ESPACIO {printf("encontro el declararvariable\n");}
-    |VERACIDAD ESPACIO IDENTIFICADOR
-    |PALABRA ESPACIO IDENTIFICADOR
+    ENTERO IDENTIFICADOR
+    |VERACIDAD IDENTIFICADOR
+    |PALABRA IDENTIFICADOR
 
 modificarvariable:
-    ESPACIO IDENTIFICADOR IGUAL expresion ESPACIO{printf("encontro el modificarvariable\n");}
+    IDENTIFICADOR IGUAL expresion
 
 expresion:
     IDENTIFICADOR
@@ -65,45 +69,37 @@ expresion:
     |VERDADERO 
     |FALSO 
     |CADENA 
-    |expresion SUMA expresion 
-    |expresion RESTA expresion
-    |expresion MUTIPLICACION expresion
-    |expresion DIVICION expresion 
-    |expresion POTENCIA expresion 
-    |expresion MENOR expresion 
-    |expresion MENORIGUAL expresion 
-    |expresion MAYOR expresion 
-    |expresion MAYORIGUAL expresion 
-    |expresion SEMEJANTE expresion 
-    |expresion DIFERENTE expresion
-    |expresion Y expresion
-    |expresion O expresion
+    |expresion operacion expresion
+
+operacion:
+    OPERADORCOMPARACION
+    |OPERADORLOGICO
+    |OPERADORADICION
+    |OPERADORPRODUCTO
+    |OPERADORPOTENCIA
 
 usarfuncion:
-    ESCRIBIR PABRE IDENTIFICADOR PCIERRE {printf("encontro el ESCRIBIR\n");}
-    |MIENTRAS PABRE expresion PCIERRE
-    |SI
-    |SI PABRE expresion PCIERRE SINO
+    ESCRIBIR PABRE IDENTIFICADOR PCIERRE
+    |MIENTRAS PABRE expresion PCIERRE bloque
+    |SI PABRE expresion PCIERRE bloque sino
+
+sino:
+    SINO bloque
+    |/*epsilon*/
 
 //Reglas gramaticales
 
 
 %%
+
+//Codigo C adicional
 void yyerror(char *s){
     printf("Error Sintactico (%s) \n",s);
 }
-//Codigo C adicional
 
-int main (int argc, char *argv[]){
-    if( ( yyin = fopen(argv[1],"rt")) ==NULL){
-        printf("F en el chat\n");
-        return 1;
-    }
-    else{
-        printf("El archivo %s se abrio correctamente\n", argv[1]);
-        yyparse();
-    }
-    fclose(yyin);
-    printf("\nfin");
-    return 0;
+int main(void)
+{
+	if(yyparse()==0)
+		printf("Compilacion exitosa\n");
+	return 0;
 }

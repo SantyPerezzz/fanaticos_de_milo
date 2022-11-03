@@ -1,0 +1,6 @@
+milo <<
+    quantidade A
+    A = "Hola"
+    palavra A
+    A = Verdadeiro
+>>

@@ -1,0 +1,17 @@
+milo <<
+    quantidade A
+    A = 34
+    ensinar(A)
+    quantidade B
+    enquanto(B <= 6) <<
+        A = A + 30
+        B = B + 1
+    >>
+    se(B == A) <<
+        ensinar(B)
+    >>
+    veracidade Proposicion1
+    Proposicion1 = Verdadeiro
+    palavra Mensaje2
+    Mensaje2 = "HolaQueTal"
+>>

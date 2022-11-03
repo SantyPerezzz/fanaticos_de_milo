@@ -9,7 +9,7 @@ gcc .\lex.yy.c .\y.tab.c -o compilador.exe
 echo "crea el compilador.exe"
 pause
 echo "se analiza el text:"
-compilador.exe brunoElMejor.text
+compilador.exe < brunoElMejor.txt
 pause  
 echo "borrando ..."
 del lex.yy.c

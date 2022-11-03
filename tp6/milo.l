@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "y.tab.h"
-FILE *yyin;
+FILE* yyin;
 %}
 
 %option noyywrap
@@ -15,8 +15,8 @@ MINUSCULA               [a-z]
 CARACTER                {MAYUSCULA}|{MINUSCULA}|"_"
 CARACTERPUNTUACION      ")"|"("|","|"."|"}"|"{"|"]"|"["|"~"|":"|";"|"&"|"|"|"\\"|"-"
 ESPACIO                 " "
-OPERADOR                "+"|"-"|"/"|"*"|"^"|"<"|">"|"<="|">="|"=="|"/="
-CARACTERLITERAL         {CARACTER}|{CARACTERPUNTUACION}|{ESPACIO}|{OPERADOR}|=
+OPERADORES                "+"|"-"|"/"|"*"|"^"|"<"|">"|"<="|">="|"=="|"/="
+CARACTERLITERAL         {CARACTER}|{CARACTERPUNTUACION}|{ESPACIO}|{OPERADORES}|"="
 CADENA                  \"{CARACTERLITERAL}*\"
 NUMERO                  {DIGITO}+
 IDENTIFICADOR           {MAYUSCULA}({CARACTER}|{DIGITO})*
@@ -24,40 +24,33 @@ IDENTIFICADOR           {MAYUSCULA}({CARACTER}|{DIGITO})*
 
 
 %%
-enquanto                    {return MIENTRAS;}
-se                          {return SI;}
-senao                       {return SINO;}
-ensinar                     {return ESCRIBIR;}
-veracidade                  {return VERACIDAD;}
-quantidade                  {return ENTERO;}
-palavra                     {return PALABRA;}
-milo                        {return INICIADOR;}
-Verdadeiro                  {return VERDADERO;}
-Falsificado                 {return FALSO;}
-{NUMERO}                    {return NUMERO;}
-{CADENA}                    {return CADENA;}
-"<="                        {return MENORIGUAL;}
-"<"                         {return MENOR;}
-">="                        {return MAYORIGUAL;}
-">"                         {return MAYOR;}
-"=="                        {return SEMEJANTE;}
-"!="                        {return DIFERENTE;}
-"&&"                        {return Y;}
-"||"                        {return O;}
-"+"                         {return SUMA;}
-"-"                         {return RESTA;}
-"*"                         {return MUTIPLICACION;}
-"/"                         {return DIVICION;}
-"^"                         {return POTENCIA;}
-{IDENTIFICADOR}             {return IDENTIFICADOR;}
-voar                        {return FIN;}
-\n                          {return ENTER;}
+enquanto                        {return MIENTRAS;}
+se                              {return SI;}
+senao                           {return SINO;}
+ensinar                         {return ESCRIBIR;}
+veracidade                      {return VERACIDAD;}
+quantidade                      {return ENTERO;}
+palavra                         {return PALABRA;}
+milo                            {return INICIADOR;}
+Verdadeiro                      {return VERDADERO;}
+Falsificado                     {return FALSO;}
+{NUMERO}                        {return NUMERO;}
+{CADENA}                        {return CADENA;}
+"<<"                              {return ABRESENTENCIA;}
+">>"                              {return CIERRASENTENCIA;}
+"<="|">="|"=="|"!="|"<"|">"     {return OPERADORCOMPARACION;}
+"&&"|"||"                       {return OPERADORLOGICO;}
+"+"|"-"                         {return OPERADORADICION;}
+"*"|"/"                         {return OPERADORPRODUCTO;}
+"^"                             {return OPERADORPOTENCIA;}
+{IDENTIFICADOR}                 {return IDENTIFICADOR;}
+\n
 \t
-"("                         {return PABRE;}
-")"                         {return PCIERRE;}
-=                           {return IGUAL;}
-" "                         {return ESPACIO;}
-.                           error();
+"("                             {return PABRE;}
+")"                             {return PCIERRE;}
+=                               {return IGUAL;}
+" "
+.                               error();
 %% 
 
 int error(void){

@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
-#include "y.tab.h"
 #include <stdbool.h>
+#include "y.tab.h"
 FILE *yyin;
 %}
 
@@ -12,17 +12,14 @@ FILE *yyin;
 DIGITO                  [0-9]
 MAYUSCULA               [A-Z]
 MINUSCULA               [a-z]
-/*CARACTER                {MAYUSCULA}|{MINUSCULA}|"_"
-/*CARACTERPUNTUACION      ")"|"("|","|"."|"}"|"{"|"]"|"["|"~"|":"|";"|"&"|"|"|"\\"|"-"
+CARACTER                {MAYUSCULA}|{MINUSCULA}|"_"
+CARACTERPUNTUACION      ")"|"("|","|"."|"}"|"{"|"]"|"["|"~"|":"|";"|"&"|"|"|"\\"|"-"
 ESPACIO                 " "
-/*OPERADOR                "+"|"-"|"/"|"*"|"^"|"<"|">"|"<="|">="|"=="|"/="
+OPERADOR                "+"|"-"|"/"|"*"|"^"|"<"|">"|"<="|">="|"=="|"/="
 CARACTERLITERAL         {CARACTER}|{CARACTERPUNTUACION}|{ESPACIO}|{OPERADOR}|=
 CADENA                  \"{CARACTERLITERAL}*\"
 NUMERO                  {DIGITO}+
-/*LOGICO                  "Verdadeiro"|"Falsificado"
 IDENTIFICADOR           {MAYUSCULA}({CARACTER}|{DIGITO})*
-/*CONSTANTE               {NUMERO}|{CADENA}|{LOGICO}
-/*PALABRARESERVADA        "enquanto"|"se"|"senao"|"quantidade"|"palavra"|"veracidade"|"funcao"|"ensinar"|"milo"
 
 
 
@@ -34,11 +31,11 @@ ensinar                     {return ESCRIBIR;}
 veracidade                  {return VERACIDAD;}
 quantidade                  {return ENTERO;}
 palavra                     {return PALABRA;}
-milo                        {return INICIADOR}
-Verdadeiro                  {yylval.valor_booleano =true;return VERDADERO}
-Falsificado                 {yylval.valor_booleano =false;return FALSO}
-{NUMERO}                    {yylval.valor_entero=atoi(yytext);return NUMERO;}
-{CADENA}                    {yylval.valor_cadena=yytext;return CADENA;}
+milo                        {return INICIADOR;}
+Verdadeiro                  {return VERDADERO;}
+Falsificado                 {return FALSO;}
+{NUMERO}                    {return NUMERO;}
+{CADENA}                    {return CADENA;}
 "<="                        {return MENORIGUAL;}
 "<"                         {return MENOR;}
 ">="                        {return MAYORIGUAL;}
@@ -52,32 +49,16 @@ Falsificado                 {yylval.valor_booleano =false;return FALSO}
 "*"                         {return MUTIPLICACION;}
 "/"                         {return DIVICION;}
 "^"                         {return POTENCIA;}
-{IDENTIFICADOR}             {return IDENTIFICADOR}
-
-
-
+{IDENTIFICADOR}             {return IDENTIFICADOR;}
+voar                        {return FIN;}
 \n
 \t
+=
 " "
 .                           error();
-
-%%
-/*
-int main (int argc, char *argv[]){
-    if( ( yyin = fopen(argv[1],"rt")) ==NULL){
-        printf("F en el chat\n");
-        return 1;
-    }
-    else{
-        printf("El archivo %s se abrio correctamente\n", argv[1]);
-        yylex();
-    }
-    fclose(yyin);
-    printf("FIN \n");
-    return 0;
-}   */
+%% 
 
 int error(void){
-    printf("Error lexico: no se entiende la palabra %s", yytext);
+    printf("Error lexico: no se entiende la palabra %s \n", yytext);
     exit(1);
 }

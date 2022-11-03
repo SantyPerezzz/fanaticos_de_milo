@@ -51,10 +51,12 @@ Falsificado                 {return FALSO;}
 "^"                         {return POTENCIA;}
 {IDENTIFICADOR}             {return IDENTIFICADOR;}
 voar                        {return FIN;}
-\n
+\n                          {return ENTER;}
 \t
-=
-" "
+"("                         {return PABRE;}
+")"                         {return PCIERRE;}
+=                           {return IGUAL;}
+" "                         {return ESPACIO;}
 .                           error();
 %% 
 

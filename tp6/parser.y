@@ -19,7 +19,7 @@
 %token NUMERO
 %token VERDADERO FALSO 
 %token CADENA
-
+%token ENTER ESPACIO IGUAL PABRE PCIERRE
 
 //PRECEDENCIA DE ABAJO PARA ARRIBA
 %right Y O
@@ -36,28 +36,28 @@
 %%
 
 inicio:
-    INICIADOR  procesos FIN
-
+    INICIADOR proceso FIN {printf("encontro el milo voar\n");}
+//PROBANDO LLEGE A LA CONCLUCION Q VA DIRECTO A proceso
 procesos:
-    proceso procesos
-    |proceso
+    procesos procesos {printf("encontro el procesos\n");}
+    |proceso {printf("encontro el proceso\n");}
 
 proceso:
     usosvariables
-    |usarfuncion   
+    |usarfuncion
+    |ENTER {printf("encontro el ENTER\n");}
 
 usosvariables:
     declararvariable
     |modificarvariable
 
-
 declararvariable:
-    ENTERO IDENTIFICADOR
-    |VERACIDAD IDENTIFICADOR
-    |PALABRA IDENTIFICADOR
+    ENTERO ESPACIO IDENTIFICADOR ESPACIO {printf("encontro el declararvariable\n");}
+    |VERACIDAD ESPACIO IDENTIFICADOR
+    |PALABRA ESPACIO IDENTIFICADOR
 
 modificarvariable:
-    IDENTIFICADOR '=' expresion
+    ESPACIO IDENTIFICADOR IGUAL expresion ESPACIO{printf("encontro el modificarvariable\n");}
 
 expresion:
     IDENTIFICADOR
@@ -80,12 +80,10 @@ expresion:
     |expresion O expresion
 
 usarfuncion:
-    ESCRIBIR '(' ENTERO ' ' IDENTIFICADOR ')'
-    |ESCRIBIR '(' PALABRA ' ' IDENTIFICADOR ')'
-    |ESCRIBIR '(' VERACIDAD ' ' IDENTIFICADOR ')'
-    |MIENTRAS '(' expresion ')'
+    ESCRIBIR PABRE IDENTIFICADOR PCIERRE {printf("encontro el ESCRIBIR\n");}
+    |MIENTRAS PABRE expresion PCIERRE
     |SI
-    |SI '(' expresion ')' SINO
+    |SI PABRE expresion PCIERRE SINO
 
 //Reglas gramaticales
 

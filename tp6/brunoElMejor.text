@@ -1,8 +1,5 @@
 milo
-
-    quantidade Var_uno 15
-    veracidade True Verdadeiro
-    se Var_uno == 1
-    se True
-    palavra "Verdadeiro"
+quantidade A
+A=3
+ensinar(A)
 

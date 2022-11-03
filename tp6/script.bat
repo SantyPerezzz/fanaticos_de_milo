@@ -1,14 +1,18 @@
 @echo off
-flex Ç.l
-echo "lex.yy.c"
+flex .\milo.l
+echo "crea el lex.yy.c"
 pause
-gcc lex.yy.c -o compilador.exe
-echo "compilador.exe"
+bison -dy .\parser.y
+echo "crea el y.tab.c y el y.tab.h"
+gcc .\lex.yy.c .\y.tab.c -o compilador.exe
+echo "crea el compilador.exe"
 pause
+echo "se analiza el text:"
 compilador.exe brunoElMejor.text
-echo "se analiza el text"
 pause  
-del lex.yy.c
-del compilador.exe
 echo "borrando ..."
+del lex.yy.c
+del y.tab.c
+del y.tab.h
+del compilador.exe
 pause
